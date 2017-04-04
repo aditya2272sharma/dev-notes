@@ -48,6 +48,7 @@ Alternatively, save some keystrokes:
 **Note:** **symlink** means symbolic link, it's similar to your windows PC's shortcuts
 
 ## Installing Java
+
 Digital Ocean has a brilliant source of information regarding software installations. You can find answers to most of your needs about them.
 
 **URL**: https://www.digitalocean.com/community/tutorials/how-to-install-java-on-ubuntu-with-apt-get
@@ -115,14 +116,22 @@ $ source ~/.bash_profile
 
 
 **After you're done**
+
 To reload:
+
+```
 $ source ~/.bash_profile
+```
 
 Alternatively, save some keystrokes:
+
+```
 $ . ~/.bash_profile
+```
 
+------------------------------------------------------------------------------------
 
-# Dealing with nginx
+## Dealing with nginx
 
 * Nginx can be installed using `sudo apt-get install nginx` from `apt-get` directly.
 * Then you need to login into 
@@ -153,8 +162,10 @@ kill $(ps aux | grep '[m]ysql' | awk '{print $2}')
 
 ```
 
+------------------------------------------------------------------------------------
 
-### Ubuntu 16.04 Wifi issues
+
+## Ubuntu 16.04 Wifi issues
 
 In Ubuntu `16.04`, you might find your pc disconnected from wifi after you wake your PC up from sleep, especially if is on battery power when it was in sleep mode. And to your surprise, you're left with no option to restart your wifi (unless you have one of those archaic physical buttons on your machine).
 
@@ -168,8 +179,9 @@ sudo systemctl restart network-manager.service
 # If this works, you can create a script to automate it.
 ```
 
+------------------------------------------------------------------------------------
 
-### Process killing shortcuts
+## Process killing shortcuts
 You may always desire to kill a  processes without doing 2 steps viz. ps-ef-grepping & then finding the `pid` to send a kill signal. 
 This example will reduce some friction their.
 
