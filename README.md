@@ -113,3 +113,73 @@ $ source ~/.bash_profile
 
 
 
+
+**After you're done**
+To reload:
+$ source ~/.bash_profile
+
+Alternatively, save some keystrokes:
+$ . ~/.bash_profile
+
+
+# Dealing with nginx
+
+* Nginx can be installed using `sudo apt-get install nginx` from `apt-get` directly.
+* Then you need to login into 
+
+```
+# Default nginx location
+/etc/nginx
+
+# Default nginx conf location
+# default, without an extension, is the file name containing nginx conf
+/etc/nginx/sites-enabled/default
+
+# typical web root for apache and other similar web servers should be
+/var/www
+
+# if installed using apt-get, the default location for web root is:
+/usr/share/nginx/www
+
+# which nginx (when installed via apt-get)
+/usr/sbin/nginx
+
+# kill all php, nginx, mysql or any kind of processes
+# https://easyengine.io/tutorials/linux/kill-all-processes/
+
+kill $(ps aux | grep '[p]hp' | awk '{print $2}')
+kill $(ps aux | grep '[n]ginx' | awk '{print $2}')
+kill $(ps aux | grep '[m]ysql' | awk '{print $2}')
+
+```
+
+
+### Ubuntu 16.04 Wifi issues
+
+In Ubuntu `16.04`, you might find your pc disconnected from wifi after you wake your PC up from sleep, especially if is on battery power when it was in sleep mode. And to your surprise, you're left with no option to restart your wifi (unless you have one of those archaic physical buttons on your machine).
+
+The following might help
+
+```
+# 16.04 runs on systemd. Try the following:
+# http://askubuntu.com/questions/761180/wifi-doesnt-work-after-suspend-after-16-04-upgrade
+sudo systemctl restart network-manager.service
+
+# If this works, you can create a script to automate it.
+```
+
+
+### Process killing shortcuts
+You may always desire to kill a  processes without doing 2 steps viz. ps-ef-grepping & then finding the `pid` to send a kill signal. 
+This example will reduce some friction their.
+
+**Note**: (post repeated intentionally).
+
+```
+# kill all php, nginx, mysql or any kind of processes
+# https://easyengine.io/tutorials/linux/kill-all-processes/
+
+kill $(ps aux | grep '[p]hp' | awk '{print $2}')
+kill $(ps aux | grep '[n]ginx' | awk '{print $2}')
+kill $(ps aux | grep '[m]ysql' | awk '{print $2}')
+```
