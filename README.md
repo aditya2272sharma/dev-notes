@@ -131,16 +131,52 @@ $ . ~/.bash_profile
 
 ------------------------------------------------------------------------------------
 
-## Dealing with nginx
+## Installing nginx in Ubuntu
 
-* Nginx can be installed using `sudo apt-get install nginx` from `apt-get` directly.
-* Then you need to login into 
+* [First we need to get rid of nginx-full & nginx-common](http://serverfault.com/a/317192)
+* Then reinstall it from `apt-get`
+* After that, we need to ensure if in the `nginx.conf` file has `worker_process` set to `auto`
+* It might happen that it was set to `0` and your server won't run that way. 
+* So, Run:
+
+```
+sudo apt-get remove --purge nginx nginx-full nginx-common
+# and, then
+sudo apt-get install nginx
+
+```
+
+
+
+### Accurately find the nginx conf location:
+
+As stated in [the stackoverflow answer here](http://stackoverflow.com/a/39335059/2458438): 'default public web root' can be found from `nginx -V` output:
+
+```
+nginx -V
+nginx version: nginx/1.10.0 (Ubuntu)
+built with OpenSSL 1.0.2g  1 Mar 2016
+TLS SNI support enabled
+configure arguments: --with-cc-opt='-g -O2 -fPIE -fstack-protector-strong -Wformat -Werror=format-security -Wdate-time -D_FORTIFY_SOURCE=2' --with-ld-opt='-Wl,-Bsymbolic-functions -fPIE -pie -Wl,-z,relro -Wl,-z,now' --prefix=/usr/share/nginx --conf-path=/etc/nginx/nginx.conf --http-log-path=/var/log/nginx/access.log --error-log-path=/var/log/nginx/error.log --lock-path=/var/lock/nginx.lock --pid-path=/run/nginx.pid --http-client-body-temp-path=/var/lib/nginx/body --http-fastcgi-temp-path=/var/lib/nginx/fastcgi --http-proxy-temp-path=/var/lib/nginx/proxy --http-scgi-temp-path=/var/lib/nginx/scgi --http-uwsgi-temp-path=/var/lib/nginx/uwsgi --with-debug --with-pcre-jit --with-ipv6 --with-http_ssl_module --with-http_stub_status_module --with-http_realip_module --with-http_auth_request_module --with-http_addition_module --with-http_dav_module --with-http_geoip_module --with-http_gunzip_module --with-http_gzip_static_module --with-http_image_filter_module --with-http_v2_module --with-http_sub_module --with-http_xslt_module --with-stream --with-stream_ssl_module --with-mail --with-mail_ssl_module --with-threads
+```
+
+** The --prefix value is the answer to the question. for the sample above the root is `/usr/share/nginx` & the conf path is `/etc/nginx/nginx.conf`**
+
+
+#### Quick location of examples & documentation:
+
+* `/usr/share/doc/nginx-doc/examples/`
+* http://wiki.nginx.org/Pitfalls
+* http://wiki.nginx.org/QuickStart
+* http://wiki.nginx.org/Configuration
+
+##### Now, the default set:
 
 ```
 # Default nginx location
 /etc/nginx
 
-# Default nginx conf location
+# nginx default conf location
 # default, without an extension, is the file name containing nginx conf
 /etc/nginx/sites-enabled/default
 
@@ -162,6 +198,37 @@ kill $(ps aux | grep '[m]ysql' | awk '{print $2}')
 
 ```
 
+#### Sample configuration
+
+* take backups of `default` files (without extension) present in `sites_enabled` & `sites_available` directories
+* path can be found using `nginx -V` and then looking at `--prefix` & `--conf` paths in the output of it
+* delete the `default` files
+* go to `nginx.conf`
+* add a `server` block, nested under `http` block
+* the contents for the block are as follows:
+
+```
+    server {
+        listen 9000 default_server;
+        listen [::]:9000 default_server;
+
+        root /var/www/html;
+        index index.html index.htm index.nginx-debian.html;
+
+        server_name _;
+
+        location / {
+            try_files $uri $uri/ =404;
+        }
+
+        location ~* \.(?:jpg|jpeg|gif|png|ico|cur|gz|svg|svgz|mp4|ogg|ogv|webm|htc)$ {
+            expires 1y;
+        }
+    }
+```
+
+** Note: ** The directive for filtering out image and mp4 files is also setting a caching header with `max-age=31536000` i.e. 1 year on them.
+
 ------------------------------------------------------------------------------------
 
 
@@ -174,6 +241,7 @@ The following might help
 ```
 # 16.04 runs on systemd. Try the following:
 # http://askubuntu.com/questions/761180/wifi-doesnt-work-after-suspend-after-16-04-upgrade
+
 sudo systemctl restart network-manager.service
 
 # If this works, you can create a script to automate it.
@@ -195,3 +263,47 @@ kill $(ps aux | grep '[p]hp' | awk '{print $2}')
 kill $(ps aux | grep '[n]ginx' | awk '{print $2}')
 kill $(ps aux | grep '[m]ysql' | awk '{print $2}')
 ```
+
+
+### Find and kill application using port in Ubuntu / Unix
+
+This `fuser 8080/tcp` will print you PID of process bound on that port.
+
+And this `fuser -k 8080/tcp` will kill that process.
+
+Works on Linux only. More universal is use of `lsof -i4` (or 6 for IPv6).
+
+And to kill that particular process occupying port
+
+`sudo fuser -k 80/tcp`
+
+** credits: **
+* [Easy Engine](https://easyengine.io/tutorials/nginx/troubleshooting/emerg-bind-failed-98-address-already-in-use/)
+* [nudzo | stackoverflow](http://stackoverflow.com/a/11596144/2458438)
+
+------------------------------------------------------------------------------------
+
+
+## Dealing with Aerospike
+
+```
+sudo service aerospike start && \
+
+sudo tail -f /var/log/aerospike/aerospike.log | grep cake
+# wait for it. "service ready: soon there will be cake!"
+
+get -O aerospike.tgz 'http://aerospike.com/download/server/latest/artifact/ubuntu12'
+# for ubuntu 14.04, replace "ubuntu12" with ubuntu14
+tar -xvf aerospike.tgz
+cd aerospike-server-community-*-ubuntu12*
+# for ubuntu 14.04, replace "ubuntu12" with ubuntu14
+sudo ./asinstall # will install the .deb packages
+sudo service aerospike start && \
+sudo tail -f /var/log/aerospike/aerospike.log | grep cake
+# wait for it. "service ready: soon there will be cake!"
+
+```
+
+
+
+------------------------------------------------------------------------------------
