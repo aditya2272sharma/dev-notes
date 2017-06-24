@@ -281,6 +281,20 @@ And to kill that particular process occupying port
 * [Easy Engine](https://easyengine.io/tutorials/nginx/troubleshooting/emerg-bind-failed-98-address-already-in-use/)
 * [nudzo | stackoverflow](http://stackoverflow.com/a/11596144/2458438)
 
+### Prevent nginx from running on startup
+
+nginx can run by default when you launch ubuntu. To disable autostart nginx service, type the following:
+
+```
+sudo update-rc.d -f nginx disable
+
+#disable is the better option
+#alternatively you can also try
+sudo update-rc.d -f nginx remove
+```
+
+** credits: **
+* [Nginx - disable autostart](https://askubuntu.com/questions/177041/nginx-disable-autostart)
 ------------------------------------------------------------------------------------
 
 
