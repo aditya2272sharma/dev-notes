@@ -1,10 +1,15 @@
-# Defining data type for a defined variable:
+# Typescript Data Types reference:
 
-The following material were taken from a video tutorial series: https://codecraft.tv/courses/angular/es6-typescript/types/
-Other helpful links: https://github.com/DefinitelyTyped/DefinitelyTyped (The repository for high quality TypeScript type definitions.)
+The following article is written as a quick reference for all available typescript data types.
+Refer the following repository for comprehensive high quality TypeScript type definitions.
+* https://github.com/DefinitelyTyped/DefinitelyTyped
+
+## Defining data type for a defined variable:
+* The following material was taken from a video tutorial series:
+  * https://codecraft.tv/courses/angular/es6-typescript/types/
 
 ### Scope of a variable
-let has a block level scope.
+`let` has a block level scope.
 It prevents re-declaration of variable twice.
 
 ```
