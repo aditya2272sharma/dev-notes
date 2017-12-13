@@ -1,10 +1,14 @@
-https://www.learnhowtoprogram.com/javascript/angular-extended/firebase-retrieving-data
+Angular Fire Starter App - https://github.com/codediodeio/angular-firestarter/blob/master/package.json
 
-# JavaScript / Angular Extended / Firebase: Retrieving Data
+***
+
+Source: https://www.learnhowtoprogram.com/javascript/angular-extended/firebase-retrieving-data
+
+## JavaScript / Angular Extended / Firebase: Retrieving Data
 
 Now that Firebase and AngularFire are configured in our application, let's test it out! In this lesson we'll begin addressing how to retrieve data from Firebase. We'll load Firebase with sample data, and program our application to retrieve it. We'll explore how to create database entries directly through the app in subsequent lessons, too.
 
-## Loading Data into Firebase
+### Loading Data into Firebase
 
 First, let's make sure our database contains information for our application to retrieve. Thankfully, Firebase allows us to upload JSON directly to a database through its website.
 
@@ -42,7 +46,7 @@ This is simply a few of our Album objects in JSON format.
 - Locate the sample-albums.json file from your project, and upload it.
 - After the file is uploaded, you should see data in your database. Awesome! Our new database now has records!
 
-## Retrieving Data from Firebase
+### Retrieving Data from Firebase
 
 Next, let's program our application to gather and display this data. We'll rely on our existing AlbumService to manage both retrieving it, and transporting it to components that require it.
 
@@ -133,7 +137,7 @@ export class MarketplaceComponent implements OnInit {
 ...
 ```
 
-# Async Pipe
+### Async Pipe
 
 Next, we'll have to update the code responsible for listing all our Albums in the MarketplaceComponent template, too. We need to add a built-in Angular pipe called async, like this:
 
