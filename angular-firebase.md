@@ -1,10 +1,18 @@
-Angular Fire Starter App - https://github.com/codediodeio/angular-firestarter/blob/master/package.json
+
+Official Repo of Sample Apps: https://firebase.google.com/docs/samples/
+
+Other similar Apps
+- https://github.com/firebase/firebase-angular-starter-pack
+- https://github.com/bave8672/angular-firebase-starter/
+- https://github.com/codediodeio/angular-firestarter
 
 ***
 
-Source: https://www.learnhowtoprogram.com/javascript/angular-extended/firebase-retrieving-data
 
 ## JavaScript / Angular Extended / Firebase: Retrieving Data
+
+**Source:** https://www.learnhowtoprogram.com/javascript/angular-extended/firebase-retrieving-data
+
 
 Now that Firebase and AngularFire are configured in our application, let's test it out! In this lesson we'll begin addressing how to retrieve data from Firebase. We'll load Firebase with sample data, and program our application to retrieve it. We'll explore how to create database entries directly through the app in subsequent lessons, too.
 
