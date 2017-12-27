@@ -1,0 +1,16 @@
+.btn:before, .btn:after {
+    content: " ";
+    position: absolute;
+    top: 0px;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 1;
+    border-radius: inherit;
+}
+.btn:before {
+    border-top: 5px solid #ffffff1c;
+}
+.btn:after {
+    border-bottom: 5px solid #00000017;
+}
