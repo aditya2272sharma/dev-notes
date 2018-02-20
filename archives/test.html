@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Test</title>
+  </head>
+  <body>
+    <script type="text/javascript">
+      var moo = 'win';
+      var obj = {
+          foo: 1,
+          moo: 2,
+          loo: 3,
+          soo: this.foo,
+          bar: function() {
+            console.log(this);
+            return this.soo;
+          },
+          car: function() {
+            return this.moo;
+          },
+          far: function(){
+            
+          }
+      };
+      var bar2 = obj.bar;
+      var bar3 = bar2.bind(obj);
+      console.log(obj.bar());
+      console.log(bar2());
+      console.log(bar3());
+
+      var car2 = obj.car;
+      var car3 = car2.bind(obj);
+      console.log(obj.car());
+      console.log(car2());
+      console.log(car3());
+      
+    </script>
+    
+  </body>
+</html>
